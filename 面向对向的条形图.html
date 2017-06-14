@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            overflow:hidden;
+            background-color: #f0f0f0;;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<script src='js/konva.min.js'></script>
+<script src='js/Grapt.js'></script>
+<script>
+    //获得可视区域的宽高
+    var width =window.innerWidth;
+    var height =window.innerHeight;
+    //创建一个舞台对象，将所有图形放在舞台对象中
+    var stage =new Konva.Stage({
+        container:'container',
+        width:width,
+        height:height
+    });
+    //创建一个layer对象，将layer对象放入到舞台对象中
+    var layer =new Konva.Layer();
+    var data = [
+        { name: '百度', value: .2, color: 'blue' },
+        { name: '阿里', value: .4, color: 'red' },
+        { name: '新浪', value: .1, color: 'purple' },
+        { name: '搜狐', value: .1, color: 'navy' },
+        { name: '360', value: .2, color: 'orange'  }
+    ];
+    var grapt =new Grapt({
+        x:stage.getWidth()/8,
+        y:stage.getHeight()*7/8,
+        maxHeight:stage.getHeight()*3/4,
+        data:data,
+        w:stage.getWidth()*3/4,
+    });
+    grapt.addToLayerOrGroup(layer);
+    grapt.move();
+    stage.add(layer);
+</script>
+</body>
+</html>

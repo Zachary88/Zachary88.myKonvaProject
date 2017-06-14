@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            overflow:hidden;
+            background-color: #f0f0f0;;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<script src='js/konva.min.js'></script>
+<script src='js/cookies.js'></script>
+<script>
+    //获得可视区域的宽高
+    var width =window.innerWidth;
+    var height =window.innerHeight;
+    //创建一个舞台对象，将所有图形放在舞台对象中
+    var stage =new Konva.Stage({
+        container:'container',
+        width:width,
+        height:height
+    });
+    //创建一个layer对象，将layer对象放入到舞台对象中
+    var layer =new Konva.Layer();
+    var data = [{
+        name: "前端",
+        value: .25,
+        color: '#e0e'
+    },{
+        name: "php",
+        value: .2,
+        color: 'orange'
+    },{
+        name: "UI",
+        value: .3,
+        color: 'blue'
+    },{
+        name: "C++",
+        value: .05,
+        color: 'green'
+    },{
+        name: "游戏",
+        value: .1,
+        color: 'purple'
+    },{
+        name: "Java",
+        value: .1,
+        color: 'red'
+    }];
+    var cook =new Cookies({
+        x:stage.getWidth()/2,
+        y:stage.getHeight()/2,
+        data:data,
+    });
+    cook.addToLayerOrGroup(layer);
+    cook.move();
+    stage.add(layer);
+</script>
+</body>
+</html>

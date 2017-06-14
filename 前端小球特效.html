@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            overflow:hidden;
+            background-color: #f0f0f0;;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<script src='js/konva.min.js'></script>
+<script src='js/webball.js'></script>
+<script>
+    //获得可视区域的宽高
+    var width =window.innerWidth;
+    var height =window.innerHeight;
+    //创建一个舞台对象，将所有图形放在舞台对象中
+    var stage =new Konva.Stage({
+        container:'container',
+        width:width,
+        height:height
+    });
+    //创建一个layer对象，将layer对象放入到舞台对象中
+    var layer =new Konva.Layer();
+    //设置三个组，分别存放背景、顺时针组和逆时针组
+    //设置背景组
+    var bgGroup =new Konva.Group({
+        x:stage.getWidth()/2,
+        y:stage.getHeight()/2
+    });
+    //设置大圆
+    var bigRadius =195;
+    var circle1 = new Konva.Circle({
+        x: 0,
+        y: 0,
+        radius: bigRadius,
+        stroke: 'red',
+        dash:[5]
+    });
+    bgGroup.add(circle1);
+    //设置中圆
+    var midRadius=125;
+    var circle2 = new Konva.Circle({
+        x: 0,
+        y: 0,
+        radius:midRadius ,
+        stroke: 'green',
+        dash:[5]
+    });
+    bgGroup.add(circle2);
+    //设置小圆
+    var minRadius=115;
+    var circle2 = new Konva.Circle({
+        x: 0,
+        y: 0,
+        radius:minRadius ,
+        stroke: "blue",
+        dash:[5]
+    });
+    bgGroup.add(circle2);
+    //绘制背景圆
+    var bigRing =new Ring({
+        x:0,
+        y:0,
+        innerRadius:60,
+        outerRadius:80,
+        ringColor:'black',
+        circleColor:'skyblue',
+        text:'WEB前端',
+        fontSize:18
+    });
+    bigRing.addToLayerOrGroup(bgGroup);
+    //设置顺时针组
+    var shunGroup =new Konva.Group({
+        x:stage.getWidth()/2,
+        y:stage.getHeight()/2
+    });
+    //画外圆顺时针运动的小圆
+    var angle =-90;
+    var webapp =new Ring({
+        x:0 +Math.cos(angle *Math.PI/180)* bigRadius,
+        y:0 +Math.sin(angle *Math.PI/180)* bigRadius,
+        innerRadius:35,
+        outerRadius:40,
+        ringColor:'#666',
+        circleColor:'red',
+        circleOpacity:.5,
+        text:'webapp',
+        fontSize:16
+    });
+    webapp.addToLayerOrGroup(shunGroup);
+    angle +=120;
+    var rectJs =new Ring({
+        x:0 +Math.cos(angle *Math.PI/180)* bigRadius,
+        y:0 +Math.sin(angle *Math.PI/180)* bigRadius,
+        innerRadius:35,
+        outerRadius:40,
+        ringColor:'#666',
+        circleColor:'red',
+        circleOpacity:.5,
+        text:'rect.js',
+        fontSize:16
+    });
+    rectJs.addToLayerOrGroup(shunGroup);
+    angle +=120;
+    var canvas =new Ring({
+        x:0+Math.cos(angle *Math.PI/180)* bigRadius,
+        y:0 +Math.sin(angle *Math.PI/180)* bigRadius,
+        innerRadius:35,
+        outerRadius:40,
+        ringColor:'#666',
+        circleColor:'red',
+        circleOpacity:.5,
+        text:'canvas',
+        fontSize:16
+    });
+    canvas.addToLayerOrGroup(shunGroup);
+    //设置逆时针组
+    var niGroup =new Konva.Group({
+        x:stage.getWidth()/2,
+        y:stage.getHeight()/2
+    });
+    //画中间圆逆时针运动的小圆
+    var inerAngle =45;
+    var jq =new Ring({
+        x:0 +Math.cos(inerAngle *Math.PI/180)* minRadius,
+        y:0 +Math.sin(inerAngle *Math.PI/180)* minRadius,
+        innerRadius:30,
+        outerRadius:35,
+        ringColor:'#666',
+        circleColor:'red',
+        circleOpacity:.5,
+        text:'jQ',
+        fontSize:16
+    });
+    jq.addToLayerOrGroup(niGroup);
+    inerAngle +=90;
+    var css =new Ring({
+        x:0 +Math.cos(inerAngle *Math.PI/180)* minRadius,
+        y:0 +Math.sin(inerAngle *Math.PI/180)* minRadius,
+        innerRadius:30,
+        outerRadius:35,
+        ringColor:'#666',
+        circleColor:'red',
+        circleOpacity:.5,
+        text:'CSS',
+        fontSize:16
+    });
+    css.addToLayerOrGroup(niGroup);
+    inerAngle +=90;
+    var h5 =new Ring({
+        x:0 +Math.cos(inerAngle *Math.PI/180)* minRadius,
+        y:0 +Math.sin(inerAngle *Math.PI/180)* minRadius,
+        innerRadius:30,
+        outerRadius:35,
+        ringColor:'#666',
+        circleColor:'red',
+        circleOpacity:.5,
+        text:'h5',
+        fontSize:16
+    });
+    h5.addToLayerOrGroup(niGroup);
+    inerAngle +=90;
+    var nodejs =new Ring({
+        x:0 +Math.cos(inerAngle *Math.PI/180)* minRadius,
+        y:0 +Math.sin(inerAngle *Math.PI/180)* minRadius,
+        innerRadius:30,
+        outerRadius:35,
+        ringColor:'#666',
+        circleColor:'red',
+        circleOpacity:.5,
+        text:'Node.js',
+        fontSize:16
+    });
+    nodejs.addToLayerOrGroup(niGroup);
+    //设置动画
+    var turnAngle=60;//设置每秒运行的角度
+    var anim = new Konva.Animation(function ( frame ) {
+        shunGroup.rotate(60*frame.timeDiff/1000);
+        shunGroup.getChildren().each(function(v,i){
+            v.rotate(-60*frame.timeDiff/1000);
+        });
+        niGroup.rotate( -60 * frame.timeDiff / 1000);
+        niGroup.getChildren().each(function( v, i){
+            v.rotate( 60 * frame.timeDiff / 1000);
+        });
+    }, layer );
+    anim.start();
+    layer.add(bgGroup);
+    layer.add(shunGroup);
+    layer.add(niGroup);
+    stage.add(layer);
+
+</script>
+</body>
+</html>
